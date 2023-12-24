@@ -1,0 +1,49 @@
+<%- include('./layout/header.ejs')%>
+
+    <div class="main">
+        <form action="/login" method="post" >
+            <h1>LOGIN</h1>
+            <label for="name"></label>
+            <input type="email" name="name" placeholder="email"><br>
+            <label for="password"></label>
+            <input type="password" name="password" id="password" placeholder="password">
+            <br>
+            <button type="submit">LOGIN</button>
+            <br>
+            <p>You a Not Accout <a href="/signup">click here</a></p>
+            <p>Back to Homepage <a href="/">Home</a></p>
+        </form>
+        
+
+
+    </div>
+    
+    <style>
+        div {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input {
+            padding: 5px 10px;
+            margin: 20px;
+            outline: none;
+        }
+
+        button {
+            text-align: center;
+            margin: 0 0 0 20px;
+            letter-spacing: 1px;
+        }
+
+        a {
+            margin: 10px 0 0 10px;
+        }
+    </style>
+<%- include('./layout/footer.ejs')%>

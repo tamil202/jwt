@@ -1,0 +1,96 @@
+<%- include('./layout/header.ejs')%>
+
+    <div class="main">
+        <form action="/signup">
+            <h1>SIGNUP</h1>
+            <label for="name"></label>
+            <input type="text" name="name" placeholder="username"><br>
+            <br>
+            <label for="email"></label>
+            <input type="email" name="email" placeholder="eamil">
+            <br>
+            <label for="password"></label>
+            <input type="password" name="password"  placeholder="password">
+            <br>
+            <button type="submit">create data</button>
+        </form>
+        <p>Back to Homepage <a href="/">Home</a></p>
+        
+    </div>
+
+    <style>
+        div {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input {
+            padding: 5px 10px;
+            margin: 20px;
+            outline: none;
+        }
+
+        button {
+            text-align: center;
+            margin: 0 0 0 20px;
+        }
+        p{
+            position: absolute;
+            top: 82%;
+        }
+    </style>
+    <script>
+         const form = document.querySelector('form');
+            const emailError = document.querySelector('.email.error');
+            const passwordError = document.querySelector('.password.error');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const name = form.name.value;
+                const email = form.email.value;
+                const password = form.password.value; // Fix: Use password value, not email value
+
+                try {
+                    const res = await fetch('/signup', {
+                        method: 'POST',
+                        body: JSON.stringify({ name, email, password }),
+                        headers: { "Content-Type": 'application/json' }
+                    });
+
+                    const data = await res.json();
+                    console.log(data);
+
+                    if (data.err) {
+                        if (data.err.email) {
+                            emailError.textContent = data.err.email;
+                            form.email.style.outline = "1px solid red"; // Highlight the email input box
+                        } else {
+                            emailError.textContent = "";
+                            form.email.style.outline = ""; // Reset outline if no error
+                        }
+
+                        if (data.err.password) {
+                            passwordError.textContent = data.err.password;
+                            form.password.style.outline = "1px solid red"; // Highlight the password input box
+                        } else {
+                            passwordError.textContent = "";
+                            form.password.style.outline = ""; // Reset outline if no error
+                        }
+                    }
+                    if(data.user){
+                        location.assign('/')
+                    }
+                } catch (err) {
+                    console.log(err);
+                }
+            });
+    </script>
+
+<%- include('./layout/footer.ejs')%>
